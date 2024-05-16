@@ -22,6 +22,7 @@ directus_collections = [
 directus_email = os.getenv("DIRECTUS_EMAIL")
 directus_password = os.getenv("DIRECTUS_PASSWORD")
 
+
 # Create a session object for making requests
 session = requests.Session()
 
