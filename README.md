@@ -11,6 +11,15 @@ A script to retrieve MS data and the associated metadata
 - **Github repository**: <https://github.com/edouardbruelhart/ms-metadata-fetcher/>
 - **Documentation** <https://edouardbruelhart.github.io/ms-metadata-fetcher/>
 
+## Running the fetcher
+
+Move to `ms_metadata_fetcher` directory and run the following command:
+
+```bash
+./launcher.sh
+```
+
+
 ## Getting started with your project
 
 First, create a repository on GitHub with the same name as this project, and then run the following commands:

@@ -43,7 +43,9 @@ if response.status_code == 200:
     directus_ms = f"{directus_instance}/items/Mass_Spectrometry_Analysis/"
 
     # Make a GET request to retrieve data
-    response = session.get(url=f"{directus_ms}?limit=-1")
+    # Here you can set the limit (e.g. limit=5) to retrieve only a few records for testing purposes
+    # limit=-1 retrieves all records
+    response = session.get(url=f"{directus_ms}?limit=5")
 
     # Check if the request was successful
     if response.status_code == 200:
