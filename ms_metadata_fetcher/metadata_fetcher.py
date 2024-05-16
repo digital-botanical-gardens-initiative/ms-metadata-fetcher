@@ -316,5 +316,7 @@ column_rename = {
 }
 final_df = final_df.rename(columns=column_rename)
 final_df.drop_duplicates(subset=["sample_filename"], keep="first", inplace=True)
-csv_file = "output.csv"
-final_df.to_csv(csv_file, index=False)
+filename_tsv = "metadata.tsv"
+filename_csv = "metadata.csv"
+final_df.to_csv(filename_tsv, sep="\t", index=False)
+final_df.to_csv(filename_csv, index=False)
