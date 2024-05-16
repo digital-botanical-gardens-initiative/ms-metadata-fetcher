@@ -13,7 +13,16 @@ A script to retrieve MS data and the associated metadata
 
 ## Running the fetcher
 
-Move to `ms_metadata_fetcher` directory and run the following command:
+
+Move to `ms_metadata_fetcher` directory 
+
+```bash
+cd ms_metadata_fetcher
+```
+
+Make sure that the .env is present (you have an example with `.env.example`)
+
+And run the following command:
 
 ```bash
 ./launcher.sh
