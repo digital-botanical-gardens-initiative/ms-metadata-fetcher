@@ -52,7 +52,7 @@ if response.status_code == 200:
         ms_id = [item["mass_spec_id"] for item in data]
         df_data = []
         for i in range(len(is_converted)):
-            if is_converted[i] is False:
+            if is_converted[i] is True:
                 directus_patch = directus_ms + ms_id[i]
                 observation = {"converted": True}
                 df_data.append(data[i])
