@@ -11,8 +11,14 @@ load_dotenv()
 
 # Define file paths and folder paths
 tsv_file_path = "metadata.tsv"
-source_folder = os.getenv("SOURCE_FOLDER")
-destination_folder = os.getenv("DESTINATION_FOLDER") + f"/subset_{datetime.now().strftime('%Y%m%d%H')}"
+source_folder = str(os.getenv("SOURCE_FOLDER"))
+destination_path = str(os.getenv("DESTINATION_FOLDER"))
+date = datetime.now().strftime("%Y%m%d%H")
+subset_path = f"subset_{date}"
+suffix = ".tsv"
+metadata_path = f"metadata_{date}{suffix}"
+destination_folder = os.path.join(destination_path, subset_path)
+destination_metadata = os.path.join(destination_path, metadata_path)
 column_name = "sample_filename"  # Replace with the actual column name
 
 directus_email = os.getenv("DIRECTUS_EMAIL")
@@ -50,21 +56,27 @@ if response.status_code == 200:
 os.makedirs(destination_folder, exist_ok=True)
 
 
-def find_file_recursively(filename, root_folder):
-    filename = filename
+def find_file_recursively(filename: str, root_folder: str) -> str | None:
     """
     Search for a file recursively within root_folder.
     Returns the full path to the file if found, otherwise None.
     """
     for dirpath, _, filenames in os.walk(root_folder):
         if filename in filenames:
-            return os.path.join(dirpath, filename)
+            return str(os.path.join(dirpath, filename))
     return None
 
 
 # Open and read the TSV file
 with open(tsv_file_path, newline="") as file:
     reader = csv.DictReader(file, delimiter="\t")
+
+    # Check if fieldnames is None
+    if reader.fieldnames is None:
+        raise ValueError("1")
+
+    # List to store rows of successfully copied files
+    copied_rows = []
 
     # Loop over each row in the TSV file
     for row in reader:
@@ -77,7 +89,17 @@ with open(tsv_file_path, newline="") as file:
             directus_patch = directus_ms + "/" + row[column_name]
             observation = {"added": True}
             response = session.patch(url=directus_patch, headers=headers, json=observation)
+
+            # If file copied successfully, add row to copied_rows
+            copied_rows.append(row)
         else:
             print(f"File {file_name} does not exist in {source_folder}")
+
+# Write copied rows to a new TSV file
+with open(destination_metadata, "w", newline="") as new_file:
+    writer = csv.DictWriter(new_file, fieldnames=reader.fieldnames, delimiter="\t")
+    writer.writeheader()
+    writer.writerows(copied_rows)
+
 
 print("Operation completed.")
