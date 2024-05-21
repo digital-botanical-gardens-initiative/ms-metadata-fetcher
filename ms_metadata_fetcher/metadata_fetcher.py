@@ -45,7 +45,7 @@ if response.status_code == 200:
     # Make a GET request to retrieve data
     # Here you can set the limit (e.g. limit=5) to retrieve only a few records for testing purposes
     # limit=-1 retrieves all records
-    response = session.get(url=f"{directus_ms}?limit=5")
+    response = session.get(url=f"{directus_ms}?filter[aliquot_id][_starts_with]=fibl_&&limit=-1")
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -54,7 +54,7 @@ if response.status_code == 200:
         ms_id = [item["mass_spec_id"] for item in data]
         df_data = []
         for i in range(len(is_converted)):
-            if is_converted[i] is True:
+            if is_converted[i] is True or is_converted[i] is False:
                 directus_patch = directus_ms + ms_id[i]
                 observation = {"converted": True}
                 df_data.append(data[i])
