@@ -13,8 +13,7 @@ A script to retrieve MS data and the associated metadata
 
 ## Running the fetcher
 
-
-Move to `ms_metadata_fetcher` directory 
+Move to `ms_metadata_fetcher` directory
 
 ```bash
 cd ms_metadata_fetcher
@@ -27,7 +26,6 @@ And run the following command:
 ```bash
 ./launcher.sh
 ```
-
 
 ## Getting started with your project
 
