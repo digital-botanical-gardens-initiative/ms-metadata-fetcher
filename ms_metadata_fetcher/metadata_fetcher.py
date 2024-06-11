@@ -45,7 +45,7 @@ if response.status_code == 200:
     # Make a GET request to retrieve data
     # Here you can set the limit (e.g. limit=5) to retrieve only a few records for testing purposes
     # limit=-1 retrieves all records
-    response = session.get(url=f"{directus_ms}?limit=5")
+    response = session.get(url=f"{directus_ms}?limit=-1")
 
     # Check if the request was successful
     if response.status_code == 200:
