@@ -45,11 +45,13 @@ if response.status_code == 200:
     # Make a GET request to retrieve data
     # Here you can set the limit (e.g. limit=5) to retrieve only a few records for testing purposes
     # limit=-1 retrieves all records
-    response = session.get(url=f"{directus_ms}?filter[aliquot_id][_starts_with]=dbgi_&&limit=-1")
-
+    response = session.get(
+        url=f"{directus_ms}?filter[aliquot_id][_starts_with]=dbgi_&filter[injection_method][_eq]=100mm_C18_15min_DDA_neg&limit=-1"
+    )
     # Check if the request was successful
     if response.status_code == 200:
         data = response.json()["data"]
+        print(len(data))
         is_converted = [item["converted"] for item in data]
         ms_id = [item["mass_spec_id"] for item in data]
         df_data = []
@@ -318,6 +320,7 @@ column_rename = {
 }
 final_df = final_df.rename(columns=column_rename)
 final_df.drop_duplicates(subset=["sample_filename"], keep="first", inplace=True)
+final_df["sample_filename"] = final_df["sample_filename"].apply(lambda x: f"{x}.mzML")
 filename_tsv = "metadata.tsv"
 filename_csv = "metadata.csv"
 final_df.to_csv(filename_tsv, sep="\t", index=False)

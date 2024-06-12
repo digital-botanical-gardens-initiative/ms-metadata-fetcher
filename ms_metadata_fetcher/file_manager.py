@@ -80,7 +80,7 @@ with open(tsv_file_path, newline="") as file:
 
     # Loop over each row in the TSV file
     for row in reader:
-        file_name = row[column_name] + ".mzML"
+        file_name = row[column_name]
         source_file = find_file_recursively(file_name, source_folder)
 
         if source_file:
