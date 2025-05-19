@@ -19,7 +19,7 @@ suffix = ".tsv"
 metadata_path = f"metadata_{date}{suffix}"
 destination_folder = os.path.join(destination_path, subset_path)
 destination_metadata = os.path.join(destination_path, metadata_path)
-column_name = "sample_filename"  # Replace with the actual column name
+column_name = "ms_filename"  # Replace with the actual column name
 
 directus_email = os.getenv("DIRECTUS_EMAIL")
 directus_password = os.getenv("DIRECTUS_PASSWORD")
